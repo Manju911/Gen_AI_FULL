@@ -1,0 +1,13 @@
+Medical Insurance Policy
+
+The company provides medical insurance for all full-time employees.
+
+Coverage includes:
+- Hospitalization
+- Emergency Treatment
+- Surgeries
+- Day-care Procedures
+
+Employees can also include their spouse and dependent children under the insurance plan.
+
+Annual health checkups are provided free of cost.
