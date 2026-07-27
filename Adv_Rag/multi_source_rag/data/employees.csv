@@ -1,0 +1,3 @@
+EmployeeID,Name,Department,Role,Age,Gender,Experience,Salary,Location,Manager,JoiningDate,Email,Phone,PerformanceRating,Project,EmploymentType,Skills
+EMP001,John Smith,HR,HR Manager,35,Male,10,85000,Bangalore,Sarah Lee,2018-04-15,john.smith@abctech.com,9876543210,4.8,HRMS,Full-Time,"HR,Payroll,Recruitment"
+EMP002,Alice Johnson,Finance,Financial Analyst,30,Female,7,78000,Pune,David Brown,2019-06-20,alice.johnson@abctech.com,9876543211,4.5,SAP Migration,Full-Time,"Excel,SAP,Power BI"

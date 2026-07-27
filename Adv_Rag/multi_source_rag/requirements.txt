@@ -1,0 +1,10 @@
+langchain
+langchain-community
+langchain-openai
+langchain-chroma
+chromadb
+pypdf
+pandas
+beautifulsoup4
+python-dotenv
+openai
