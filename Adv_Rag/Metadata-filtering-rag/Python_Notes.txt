@@ -1,0 +1,19 @@
+Python Programming Notes
+
+Python is a high-level, interpreted programming language.
+
+Features:
+- Object-Oriented Programming
+- Functional Programming
+- Dynamic Typing
+- Large Standard Library
+
+Common Data Types:
+- int
+- float
+- string
+- list
+- tuple
+- dictionary
+
+Python is widely used in Data Science, Machine Learning, AI, Automation, and Web Development.
