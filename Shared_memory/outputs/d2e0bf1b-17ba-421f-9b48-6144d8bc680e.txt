@@ -1,0 +1,719 @@
+========== FINAL ANSWER ==========
+
+Session ID : d2e0bf1b-17ba-421f-9b48-6144d8bc680e
+
+User Query : how to create a multi agent workflow
+
+# How to Create a Multi-Agent Workflow
+
+A **multi-agent workflow** is a system where multiple AI agents collaborate to complete a larger task. Each agent has a specific responsibility, such as planning, researching, writing, coding, reviewing, or finalizing an output.
+
+Instead of using one general-purpose agent to do everything, you divide the work among specialized agents and define how they communicate.
+
+---
+
+## 1. Define the overall goal
+
+Start by clearly describing what the workflow should accomplish.
+
+Example goal:
+
+> Create a system that researches a topic, writes a report, reviews it, and produces a final polished version.
+
+Ask yourself:
+
+- What is the final output?
+- Who will use the output?
+- What does a successful result look like?
+- Does the task require research, reasoning, writing, coding, analysis, or review?
+- Does the workflow need to be fast, highly accurate, low-cost, or highly automated?
+
+A clear goal helps you decide which agents you need and how they should work together.
+
+---
+
+## 2. Break the goal into smaller tasks
+
+Next, divide the main goal into smaller, manageable tasks.
+
+For example, if the goal is to create a researched article, the workflow might include:
+
+1. Understand the user request
+2. Create a task plan
+3. Research the topic
+4. Summarize findings
+5. Write a draft
+6. Review the draft
+7. Revise the draft if needed
+8. Produce the final answer
+
+Each task should be specific enough that one agent can handle it well.
+
+A good rule is:
+
+> If a task requires a different skill or perspective, consider assigning it to a separate agent.
+
+---
+
+## 3. Assign agents to tasks
+
+Create specialized agents for the main responsibilities.
+
+Example:
+
+| Agent | Role |
+|---|---|
+| Planner Agent | Breaks the request into steps |
+| Research Agent | Finds and summarizes relevant information |
+| Writer Agent | Creates the first draft |
+| Reviewer Agent | Checks accuracy, clarity, completeness, and quality |
+| Finalizer Agent | Produces the polished final output |
+
+You do not need many agents at the beginning. Start simple.
+
+A practical beginner structure is:
+
+```text
+User → Planner → Worker → Reviewer → Finalizer
+```
+
+Where:
+
+- **Planner** decides what needs to be done.
+- **Worker** performs the main task.
+- **Reviewer** checks the result.
+- **Finalizer** formats and delivers the final answer.
+
+---
+
+## 4. Write clear instructions for each agent
+
+Each agent should have a clear role, rules, and expected output format.
+
+For example:
+
+### Planner Agent
+
+```text
+You are the Planner Agent.
+Your job is to break the user request into a clear task list.
+If the request is unclear, ask a clarification question.
+Return only a numbered plan.
+```
+
+### Research Agent
+
+```text
+You are the Research Agent.
+Your job is to gather relevant information for the task.
+Return concise research notes.
+Do not invent facts.
+If information is uncertain, clearly say so.
+```
+
+### Writer Agent
+
+```text
+You are the Writer Agent.
+Your job is to write a clear draft using the plan and research notes.
+Do not add unsupported claims.
+Use the requested tone, format, and length.
+```
+
+### Reviewer Agent
+
+```text
+You are the Reviewer Agent.
+Your job is to review the draft for accuracy, clarity, completeness, and structure.
+
+Return:
+1. Approval status: approved or rejected
+2. Issues found
+3. Suggested improvements
+```
+
+### Finalizer Agent
+
+```text
+You are the Finalizer Agent.
+Your job is to produce the final polished answer.
+Use the reviewer’s feedback.
+Follow the requested format.
+Do not introduce new unsupported information.
+```
+
+Clear instructions reduce confusion between agents.
+
+---
+
+## 5. Choose a workflow pattern
+
+There are several common ways to organize multi-agent workflows.
+
+---
+
+### A. Sequential workflow
+
+In a sequential workflow, each agent passes its output to the next agent.
+
+Example:
+
+```text
+User → Planner → Researcher → Writer → Reviewer → Finalizer
+```
+
+Use this when the process is predictable and step-by-step.
+
+Example use cases:
+
+- Writing reports
+- Generating blog posts
+- Creating documentation
+- Summarizing research
+- Preparing proposals
+
+---
+
+### B. Parallel workflow
+
+In a parallel workflow, multiple agents work at the same time, then their outputs are combined.
+
+Example:
+
+```text
+Research Agent A ┐
+Research Agent B ├→ Synthesizer Agent → Writer Agent
+Research Agent C ┘
+```
+
+Use this when you want multiple perspectives or faster processing.
+
+Example:
+
+- One agent researches technical details.
+- One agent researches market trends.
+- One agent researches risks.
+- A synthesizer combines the findings.
+
+This is useful for complex research, strategy, analysis, or comparison tasks.
+
+---
+
+### C. Supervisor workflow
+
+In a supervisor workflow, a manager agent decides which agent should act next.
+
+Example:
+
+```text
+User → Supervisor → Specialist Agents → Supervisor → Final Output
+```
+
+The supervisor may decide:
+
+- If research is needed, call the Research Agent.
+- If code is needed, call the Coding Agent.
+- If review is needed, call the Reviewer Agent.
+- If the task is complete, call the Finalizer Agent.
+
+Use this when the workflow needs flexible decision-making.
+
+---
+
+### D. Review-and-revise workflow
+
+This pattern has one agent create output and another agent review it. If the review fails, the draft goes back for revision.
+
+Example:
+
+```text
+Writer → Reviewer → Writer → Reviewer → Finalizer
+```
+
+Basic logic:
+
+```text
+If reviewer approves:
+    send to Finalizer
+Else:
+    send reviewer feedback back to Writer
+    revise draft
+    review again
+```
+
+Use this when quality is important.
+
+---
+
+## 6. Define inputs and outputs for every agent
+
+Each agent should receive predictable input and return predictable output. This makes the workflow easier to debug and automate.
+
+For example, the Research Agent might receive:
+
+```json
+{
+  "topic": "Benefits of solar energy",
+  "questions": [
+    "What are the cost benefits?",
+    "What are the environmental benefits?",
+    "What are the limitations?"
+  ]
+}
+```
+
+And return:
+
+```json
+{
+  "key_findings": [
+    "Solar energy can reduce electricity bills.",
+    "Solar power can lower carbon emissions.",
+    "Installation costs can be high upfront."
+  ],
+  "uncertainties": [
+    "Savings vary by region, sunlight exposure, and electricity rates."
+  ]
+}
+```
+
+Structured input and output are especially useful if you are building the workflow in code.
+
+---
+
+## 7. Add rules and constraints
+
+Define boundaries for the workflow.
+
+Examples of useful rules:
+
+- Maximum response length
+- Required format
+- Tone of voice
+- Whether sources are required
+- When to ask the user for clarification
+- Which tools each agent can use
+- What each agent is not allowed to do
+- How many revision loops are allowed
+
+Example rules:
+
+```text
+If the user request is unclear, the Planner Agent must ask a clarification question.
+
+The Writer Agent may only use information provided by the Research Agent.
+
+The Reviewer Agent must reject drafts with unsupported claims.
+
+The Finalizer Agent must produce a clean Markdown response.
+
+The review loop may run at most two times.
+```
+
+Constraints help keep the system predictable and safe.
+
+---
+
+## 8. Decide whether agents need memory
+
+Some workflows need shared context or memory.
+
+Common memory types include:
+
+| Memory Type | Purpose |
+|---|---|
+| Short-term memory | Stores the current conversation or task context |
+| Long-term memory | Stores user preferences, project history, or previous outputs |
+| Shared workspace | Stores plans, notes, drafts, reviews, and task status |
+
+Example shared context:
+
+```json
+{
+  "user_preferences": {
+    "tone": "clear and practical",
+    "format": "Markdown",
+    "length": "medium"
+  },
+  "project": {
+    "topic": "AI in healthcare",
+    "current_stage": "draft review"
+  }
+}
+```
+
+Be careful with memory. Too much shared context can make agents slower, more expensive, or more likely to get distracted.
+
+---
+
+## 9. Add tools if needed
+
+Agents may need tools to complete tasks.
+
+Examples:
+
+| Tool | Used By | Purpose |
+|---|---|---|
+| Web search | Research Agent | Find current information |
+| Database query | Data Agent | Retrieve internal records |
+| Calculator | Analyst Agent | Perform calculations |
+| Code executor | Developer Agent | Run and test code |
+| File reader | Document Agent | Analyze uploaded files |
+| API connector | Operations Agent | Interact with external systems |
+
+Tool access should be limited by role.
+
+Example:
+
+```text
+Research Agent can use web search.
+Data Agent can query the database.
+Writer Agent cannot access external tools.
+Reviewer Agent can only inspect the draft and notes.
+```
+
+This reduces mistakes, security risks, and unnecessary tool usage.
+
+---
+
+## 10. Choose an orchestration method
+
+Orchestration is the logic that controls:
+
+- Which agent runs
+- In what order agents run
+- What data each agent receives
+- Whether the workflow loops, stops, retries, or escalates
+
+You can use simple custom code or an agent framework.
+
+Popular options include:
+
+- LangGraph
+- CrewAI
+- AutoGen
+- Semantic Kernel
+- OpenAI Assistants API
+- Custom Python or JavaScript orchestration
+
+For a simple sequential workflow, custom code is often enough.
+
+Example pseudocode:
+
+```python
+user_request = "Write a short report about renewable energy trends."
+
+plan = planner_agent(user_request)
+
+research = research_agent({
+    "user_request": user_request,
+    "plan": plan
+})
+
+draft = writer_agent({
+    "user_request": user_request,
+    "plan": plan,
+    "research": research
+})
+
+review = reviewer_agent({
+    "draft": draft,
+    "research": research
+})
+
+if review["approved"]:
+    final = finalizer_agent({
+        "draft": draft,
+        "review": review
+    })
+else:
+    revised_draft = writer_agent({
+        "user_request": user_request,
+        "plan": plan,
+        "research": research,
+        "review_feedback": review
+    })
+
+    final = finalizer_agent({
+        "draft": revised_draft,
+        "review": review
+    })
+
+print(final)
+```
+
+---
+
+## 11. Design the full workflow logic
+
+A simple report-generation workflow might look like this:
+
+```text
+1. User submits request.
+2. Planner Agent creates a task plan.
+3. Research Agent gathers information.
+4. Writer Agent creates a draft.
+5. Reviewer Agent reviews the draft.
+6. If approved, Finalizer Agent returns the final answer.
+7. If rejected, Writer Agent revises the draft.
+8. Reviewer Agent checks the revised draft.
+9. Finalizer Agent returns the final version.
+```
+
+You can also include fallback logic:
+
+```text
+If the request is unclear:
+    Ask the user for clarification.
+
+If research is incomplete:
+    Return to Research Agent or ask the user for more information.
+
+If the reviewer rejects the draft twice:
+    Stop the loop and return the best version with notes.
+
+If a tool fails:
+    Retry once, use a backup tool, or continue without it.
+```
+
+---
+
+## 12. Example: Simple Multi-Agent Workflow
+
+### Goal
+
+Create a researched article.
+
+### Agents
+
+1. Planner Agent
+2. Research Agent
+3. Writer Agent
+4. Reviewer Agent
+5. Finalizer Agent
+
+### Flow
+
+```text
+User Request
+   ↓
+Planner Agent
+   ↓
+Research Agent
+   ↓
+Writer Agent
+   ↓
+Reviewer Agent
+   ↓
+Finalizer Agent
+   ↓
+Final Answer
+```
+
+### Workflow logic
+
+```text
+The user submits a request.
+
+The Planner Agent creates a plan.
+
+The Research Agent gathers relevant information.
+
+The Writer Agent creates a draft using the plan and research.
+
+The Reviewer Agent checks the draft.
+
+If the draft is approved:
+    The Finalizer Agent formats and returns the final answer.
+
+If the draft is not approved:
+    The Writer Agent revises the draft using reviewer feedback.
+    The Reviewer Agent checks again.
+    The Finalizer Agent returns the final version.
+```
+
+---
+
+## 13. Test with simple examples
+
+Before building a complex workflow, test with a simple task.
+
+Example prompt:
+
+```text
+Write a short blog post about healthy sleep habits.
+```
+
+Check:
+
+- Did the Planner create a useful plan?
+- Did the Research Agent stay on topic?
+- Did the Writer use the research correctly?
+- Did the Reviewer catch real issues?
+- Did the final answer improve after review?
+- Was the workflow too slow or too expensive?
+- Were any agents unnecessary?
+
+Start small, then add complexity only when needed.
+
+---
+
+## 14. Add evaluation criteria
+
+You need a way to measure whether the workflow is working well.
+
+Useful evaluation metrics include:
+
+| Metric | What It Measures |
+|---|---|
+| Accuracy | Are facts correct? |
+| Completeness | Did the output cover the request? |
+| Clarity | Is the answer easy to understand? |
+| Format consistency | Does the output follow the required structure? |
+| Cost | How many model calls or tool calls were used? |
+| Speed | How long did the workflow take? |
+| User satisfaction | Did the user get what they needed? |
+| Revision count | How many times did the workflow need correction? |
+
+You can evaluate outputs manually or use an evaluator agent.
+
+Example Evaluator Agent instruction:
+
+```text
+You are the Evaluator Agent.
+Score the final answer from 1 to 5 on:
+1. Accuracy
+2. Completeness
+3. Clarity
+4. Format compliance
+
+Return the scores and a short explanation.
+```
+
+---
+
+## 15. Add error handling
+
+Plan what should happen when things go wrong.
+
+Common problems and solutions:
+
+| Problem | Possible Solution |
+|---|---|
+| Agent output is empty | Retry with a simpler prompt |
+| Agent output is malformed | Ask the agent to regenerate in the required format |
+| Research is uncertain | Mark uncertainty or ask for clarification |
+| Tool call fails | Retry, use a backup tool, or continue without the tool |
+| Reviewer rejects draft | Send feedback back to Writer |
+| Workflow loops too much | Set a maximum number of retries |
+| User request is unclear | Ask a clarification question |
+| Agents disagree | Use a Supervisor or Evaluator Agent to decide |
+
+Example rule:
+
+```text
+If the Reviewer rejects the draft more than two times, stop the loop and return the best available version with a note explaining the limitation.
+```
+
+---
+
+## 16. Improve the workflow over time
+
+After testing, refine the system.
+
+Improve:
+
+- Agent instructions
+- Task boundaries
+- Communication format
+- Tool permissions
+- Memory usage
+- Evaluation criteria
+- Error handling
+- Cost and latency
+- Number of agents
+
+Avoid adding agents just because you can. More agents can increase complexity, cost, and failure points.
+
+A good principle is:
+
+> Add another agent only when it clearly improves quality, reliability, speed, or maintainability.
+
+---
+
+# Practical Starter Template
+
+If you are new to multi-agent workflows, use this structure:
+
+```text
+User → Planner → Worker → Reviewer → Finalizer
+```
+
+## Planner
+
+Responsible for understanding the request and creating a plan.
+
+```text
+You are the Planner.
+Break the user request into clear steps.
+If anything is unclear, ask for clarification.
+Return a concise numbered plan.
+```
+
+## Worker
+
+Responsible for completing the main task.
+
+```text
+You are the Worker.
+Use the plan to complete the main task.
+Follow the user’s requested format and tone.
+Do not invent facts.
+```
+
+## Reviewer
+
+Responsible for checking quality.
+
+```text
+You are the Reviewer.
+Review the Worker’s output for correctness, completeness, clarity, and format.
+Return approved or rejected.
+If rejected, provide specific revision instructions.
+```
+
+## Finalizer
+
+Responsible for producing the polished final output.
+
+```text
+You are the Finalizer.
+Use the approved draft and reviewer feedback to create the final response.
+Make the answer clear, well-structured, and ready for the user.
+```
+
+---
+
+# Summary
+
+To create a multi-agent workflow:
+
+1. Define the overall goal.
+2. Break the goal into smaller tasks.
+3. Assign specialized agents to those tasks.
+4. Write clear instructions for each agent.
+5. Choose a workflow pattern: sequential, parallel, supervisor, or review-and-revise.
+6. Define structured inputs and outputs.
+7. Add rules, constraints, memory, and tools if needed.
+8. Use an orchestration method to control the flow.
+9. Test with simple examples.
+10. Add evaluation and error handling.
+11. Improve iteratively.
+
+For most beginners, the best starting point is:
+
+```text
+User → Planner → Worker → Reviewer → Finalizer
+```
+
+This gives you a simple, reliable foundation that you can expand as your workflow becomes more complex.
