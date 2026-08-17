@@ -1,0 +1,10 @@
+Company Laptop Support
+
+Employees should restart their laptop when
+experiencing temporary software problems.
+
+Employees should not install unauthorized software.
+
+Hardware problems such as damaged screens,
+keyboard failures, or battery problems should
+be reported to IT support.

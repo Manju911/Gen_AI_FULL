@@ -1,0 +1,14 @@
+VPN Troubleshooting Guide
+
+If the company VPN is not connecting:
+
+1. Check that the internet connection is working.
+2. Restart the VPN application.
+3. Verify that the company VPN credentials are correct.
+4. Restart the computer.
+5. Try connecting again.
+
+If VPN continues to fail after these steps,
+contact IT support.
+
+Do not share your VPN password with anyone.

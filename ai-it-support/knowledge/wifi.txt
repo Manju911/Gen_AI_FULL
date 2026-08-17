@@ -1,0 +1,11 @@
+Company Wi-Fi Troubleshooting Guide
+
+If a laptop cannot connect to company Wi-Fi:
+
+1. Check that Wi-Fi is enabled.
+2. Disconnect and reconnect to the company network.
+3. Restart the laptop.
+4. Forget the Wi-Fi network and reconnect.
+5. Verify that the correct company Wi-Fi network is selected.
+
+If the problem continues, contact IT support.

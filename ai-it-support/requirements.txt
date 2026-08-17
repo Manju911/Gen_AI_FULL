@@ -1,0 +1,13 @@
+fastapi
+uvicorn[standard]
+streamlit
+openai
+chromadb
+redis
+celery
+pydantic
+pydantic-settings
+python-dotenv
+httpx<0.28
+slowapi
+prometheus-fastapi-instrumentator

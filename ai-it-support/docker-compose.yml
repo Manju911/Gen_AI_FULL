@@ -1,0 +1,81 @@
+services:
+
+  api:
+    build: .
+    container_name: ai-support-api
+
+    ports:
+      - "8000:8000"
+
+    env_file:
+      - .env
+
+    environment:
+      REDIS_URL: redis://redis:6379/0
+      CHROMA_PATH: /app/chroma_db
+
+    volumes:
+      - chroma_data:/app/chroma_db
+
+    depends_on:
+      - redis
+
+  worker:
+    build: .
+
+    container_name: ai-support-worker
+
+    command:
+      - celery
+      - -A
+      - app.workers.ticket_worker.celery_app
+      - worker
+      - --loglevel=info
+
+    env_file:
+      - .env
+
+    environment:
+      REDIS_URL: redis://redis:6379/0
+
+    depends_on:
+      - redis
+
+  redis:
+    image: redis:7-alpine
+
+    container_name: ai-support-redis
+
+    ports:
+      - "6379:6379"
+
+    volumes:
+      - redis_data:/data
+
+  frontend:
+    build: .
+
+    container_name: ai-support-frontend
+
+    command:
+      - streamlit
+      - run
+      - frontend/streamlit_app.py
+      - --server.address=0.0.0.0
+      - --server.port=8501
+
+    ports:
+      - "8501:8501"
+
+    environment:
+      API_URL: http://api:8000
+
+    depends_on:
+      - api
+
+
+volumes:
+
+  chroma_data:
+
+  redis_data:
